@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTL_HSK.Reports;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using CrystalDecisions.CrystalReports.Engine;
 namespace BTL_HSK
 {
     public partial class frmHangBan : Form
@@ -163,8 +164,8 @@ namespace BTL_HSK
                         cmd.Parameters.AddWithValue("@sl", txtSoLuong.Text);
 
                         cmd.Parameters.AddWithValue("@giaban", txtGiaBan.Text);
-                        cmd.Parameters.AddWithValue("@tgmua", mtbNgayBan.Text);
-                        cmd.Parameters.AddWithValue("@tgbh", mtbTGBaoHanh.Text);
+                        cmd.Parameters.AddWithValue("@tgmua", Convert.ToDateTime(mtbNgayBan.Text));
+                        cmd.Parameters.AddWithValue("@tgbh", Convert.ToDateTime(mtbTGBaoHanh.Text));
                         cnn.Open();
                         cmd.ExecuteNonQuery();
                         cnn.Close();
@@ -221,19 +222,56 @@ namespace BTL_HSK
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
-            SqlCommand cmd = new SqlCommand("searchHB", con);
+            
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+            string timkiem = "select * from tblHangBan where PK_MaHoaDon is not null ";
+            if (!string.IsNullOrEmpty(txtSoLuong.Text.Trim()))
+                timkiem += string.Format("and  iSoLuong > {0}", Int32.Parse(txtSoLuong.Text));
+            if (!string.IsNullOrEmpty(txtMaHang.Text.Trim()))
+                timkiem += string.Format(" and  SMaHang like '%{0}%'", txtMaHang.Text);
+            if (!string.IsNullOrEmpty(txtMaHoaDon.Text.Trim()))
+                timkiem += string.Format(" and  PK_MaHoaDon like '%{0}%'", txtMaHoaDon.Text);
+            if (!string.IsNullOrEmpty(txtGiaBan.Text.Trim()))
+                timkiem += string.Format(" and  fGiaBan > {0}", float.Parse(txtGiaBan.Text));
+            con.Open();
+            using (SqlCommand cmd = new SqlCommand(timkiem, con))
+            {
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    dgvHangBan.DataSource = dt;
+                }
+            }
+            con.Close();
+        }
+
+        private void btnBaoCao_Click(object sender, EventArgs e)
+        {
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+            SqlCommand cmd = new SqlCommand("rpHB", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@mahd", txtMaHoaDon.Text);
-            cmd.Parameters.AddWithValue("@mahang", txtMaHang.Text);
-
             con.Open();
-            cmd.ExecuteNonQuery();
 
-            //Load dữ liệu
-            SqlDataReader sdr = cmd.ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Load(sdr);
-            dgvHangBan.DataSource = dt;
+            using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+            {
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                rpHangBan rpt = new rpHangBan();
+
+                rpt.SetDataSource(dt);
+                rpt.SetParameterValue("mahd", txtMaHoaDon.Text);
+
+
+
+                frmRPHB f = new frmRPHB();
+                f.crvHB.ReportSource = rpt;
+
+                f.Show();
+
+            }
+
             con.Close();
         }
     }

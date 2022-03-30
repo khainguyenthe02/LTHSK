@@ -31,9 +31,18 @@ namespace BTL_HSK
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvTBBH = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PK_Mahang = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tinhtrang = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nguyennhan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sHangSX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnTimKiem = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbThietBi = new System.Windows.Forms.ComboBox();
+            this.txtMaBH = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.mtbTGHetHB = new System.Windows.Forms.MaskedTextBox();
             this.mtbTGNhanBH = new System.Windows.Forms.MaskedTextBox();
             this.txtNguyenNhan = new System.Windows.Forms.TextBox();
@@ -42,20 +51,12 @@ namespace BTL_HSK
             this.label7 = new System.Windows.Forms.Label();
             this.txtTinhTrang = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtMaTB = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnXoa = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
             this.btnThem = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtMaBH = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PK_Mahang = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tinhtrang = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nguyennhan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sHangSX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnBaoCao = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTBBH)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -88,6 +89,44 @@ namespace BTL_HSK
             this.dgvTBBH.TabIndex = 0;
             this.dgvTBBH.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTBBH_CellContentClick);
             // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "PK_MaBH";
+            this.Column1.HeaderText = "Mã bảo hành";
+            this.Column1.Name = "Column1";
+            // 
+            // PK_Mahang
+            // 
+            this.PK_Mahang.DataPropertyName = "sTenhang";
+            this.PK_Mahang.HeaderText = "Thiết bị";
+            this.PK_Mahang.Name = "PK_Mahang";
+            // 
+            // Tinhtrang
+            // 
+            this.Tinhtrang.DataPropertyName = "sTinhTrang";
+            this.Tinhtrang.HeaderText = "Tình trạng";
+            this.Tinhtrang.Name = "Tinhtrang";
+            this.Tinhtrang.Width = 200;
+            // 
+            // Nguyennhan
+            // 
+            this.Nguyennhan.DataPropertyName = "sNguyenNhan";
+            this.Nguyennhan.HeaderText = "Nguyên nhân";
+            this.Nguyennhan.Name = "Nguyennhan";
+            this.Nguyennhan.Width = 200;
+            // 
+            // fGiaBan
+            // 
+            this.fGiaBan.DataPropertyName = "dTGNhanBH";
+            this.fGiaBan.HeaderText = "Ngày bảo hành";
+            this.fGiaBan.Name = "fGiaBan";
+            // 
+            // sHangSX
+            // 
+            this.sHangSX.DataPropertyName = "dBHDen";
+            this.sHangSX.HeaderText = "Bảo hành đến";
+            this.sHangSX.Name = "sHangSX";
+            // 
             // btnReset
             // 
             this.btnReset.Location = new System.Drawing.Point(608, 171);
@@ -110,6 +149,7 @@ namespace BTL_HSK
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbThietBi);
             this.groupBox1.Controls.Add(this.txtMaBH);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.mtbTGHetHB);
@@ -120,7 +160,6 @@ namespace BTL_HSK
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtTinhTrang);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.txtMaTB);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 36);
@@ -130,6 +169,31 @@ namespace BTL_HSK
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin hàng hóa";
             // 
+            // cbThietBi
+            // 
+            this.cbThietBi.FormattingEnabled = true;
+            this.cbThietBi.Location = new System.Drawing.Point(91, 54);
+            this.cbThietBi.Name = "cbThietBi";
+            this.cbThietBi.Size = new System.Drawing.Size(200, 21);
+            this.cbThietBi.TabIndex = 18;
+            // 
+            // txtMaBH
+            // 
+            this.txtMaBH.Location = new System.Drawing.Point(91, 22);
+            this.txtMaBH.Name = "txtMaBH";
+            this.txtMaBH.Size = new System.Drawing.Size(159, 20);
+            this.txtMaBH.TabIndex = 17;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(20, 25);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(70, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Mã bảo hành";
+            // 
             // mtbTGHetHB
             // 
             this.mtbTGHetHB.Location = new System.Drawing.Point(445, 55);
@@ -138,6 +202,7 @@ namespace BTL_HSK
             this.mtbTGHetHB.Size = new System.Drawing.Size(100, 20);
             this.mtbTGHetHB.TabIndex = 15;
             this.mtbTGHetHB.ValidatingType = typeof(System.DateTime);
+            this.mtbTGHetHB.TextChanged += new System.EventHandler(this.mtbTGHetHB_TextChanged);
             // 
             // mtbTGNhanBH
             // 
@@ -147,6 +212,7 @@ namespace BTL_HSK
             this.mtbTGNhanBH.Size = new System.Drawing.Size(100, 20);
             this.mtbTGNhanBH.TabIndex = 14;
             this.mtbTGNhanBH.ValidatingType = typeof(System.DateTime);
+            this.mtbTGNhanBH.TextChanged += new System.EventHandler(this.mtbTGNhanBH_TextChanged);
             // 
             // txtNguyenNhan
             // 
@@ -202,22 +268,15 @@ namespace BTL_HSK
             this.label4.TabIndex = 4;
             this.label4.Text = "Tình trạng";
             // 
-            // txtMaTB
-            // 
-            this.txtMaTB.Location = new System.Drawing.Point(91, 56);
-            this.txtMaTB.Name = "txtMaTB";
-            this.txtMaTB.Size = new System.Drawing.Size(159, 20);
-            this.txtMaTB.TabIndex = 1;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(34, 59);
+            this.label2.Location = new System.Drawing.Point(48, 59);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 0;
-            this.label2.Text = "Mã thiết bị";
+            this.label2.Text = "Thiết bị";
             // 
             // btnXoa
             // 
@@ -260,66 +319,24 @@ namespace BTL_HSK
             this.label1.Text = "BẢO HÀNH THIẾT BỊ";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // txtMaBH
+            // btnBaoCao
             // 
-            this.txtMaBH.Location = new System.Drawing.Point(91, 22);
-            this.txtMaBH.Name = "txtMaBH";
-            this.txtMaBH.Size = new System.Drawing.Size(159, 20);
-            this.txtMaBH.TabIndex = 17;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(20, 25);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 13);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Mã bảo hành";
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "PK_MaBH";
-            this.Column1.HeaderText = "Mã bảo hành";
-            this.Column1.Name = "Column1";
-            // 
-            // PK_Mahang
-            // 
-            this.PK_Mahang.DataPropertyName = "sMaThietBi";
-            this.PK_Mahang.HeaderText = "Mã Thiết bị";
-            this.PK_Mahang.Name = "PK_Mahang";
-            // 
-            // Tinhtrang
-            // 
-            this.Tinhtrang.DataPropertyName = "sTinhTrang";
-            this.Tinhtrang.HeaderText = "Tình trạng";
-            this.Tinhtrang.Name = "Tinhtrang";
-            this.Tinhtrang.Width = 200;
-            // 
-            // Nguyennhan
-            // 
-            this.Nguyennhan.DataPropertyName = "sNguyenNhan";
-            this.Nguyennhan.HeaderText = "Nguyên nhân";
-            this.Nguyennhan.Name = "Nguyennhan";
-            this.Nguyennhan.Width = 200;
-            // 
-            // fGiaBan
-            // 
-            this.fGiaBan.DataPropertyName = "dTGNhanBH";
-            this.fGiaBan.HeaderText = "Ngày bảo hành";
-            this.fGiaBan.Name = "fGiaBan";
-            // 
-            // sHangSX
-            // 
-            this.sHangSX.DataPropertyName = "dBHDen";
-            this.sHangSX.HeaderText = "Bảo hành đến";
-            this.sHangSX.Name = "sHangSX";
+            this.btnBaoCao.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnBaoCao.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnBaoCao.Location = new System.Drawing.Point(608, 4);
+            this.btnBaoCao.Name = "btnBaoCao";
+            this.btnBaoCao.Size = new System.Drawing.Size(75, 38);
+            this.btnBaoCao.TabIndex = 18;
+            this.btnBaoCao.Text = "In báo cáo";
+            this.btnBaoCao.UseVisualStyleBackColor = false;
+            this.btnBaoCao.Click += new System.EventHandler(this.btnBaoCao_Click);
             // 
             // frmTBCanBaoHanh
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 421);
+            this.Controls.Add(this.btnBaoCao);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnTimKiem);
@@ -352,7 +369,6 @@ namespace BTL_HSK
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtTinhTrang;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtMaTB;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnSua;
@@ -362,11 +378,13 @@ namespace BTL_HSK
         private System.Windows.Forms.MaskedTextBox mtbTGNhanBH;
         private System.Windows.Forms.TextBox txtMaBH;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbThietBi;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn PK_Mahang;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tinhtrang;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nguyennhan;
         private System.Windows.Forms.DataGridViewTextBoxColumn fGiaBan;
         private System.Windows.Forms.DataGridViewTextBoxColumn sHangSX;
+        private System.Windows.Forms.Button btnBaoCao;
     }
 }

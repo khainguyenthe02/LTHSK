@@ -34,9 +34,9 @@ namespace BTL_HSK
             this.btnSua = new System.Windows.Forms.Button();
             this.btnXoa = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbNhomHang = new System.Windows.Forms.ComboBox();
             this.txtHSX = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtMaNhomHang = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtGiaBan = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -59,8 +59,7 @@ namespace BTL_HSK
             this.fGiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sHangSX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sMaNhomHang = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txtSearchTenHH = new System.Windows.Forms.TextBox();
+            this.btnBaoCao = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHangHoa)).BeginInit();
@@ -85,6 +84,7 @@ namespace BTL_HSK
             this.btnThem.TabIndex = 1;
             this.btnThem.Text = "Thêm";
             this.btnThem.UseVisualStyleBackColor = true;
+            this.btnThem.TextChanged += new System.EventHandler(this.txtMaHang_TextChanged);
             this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // btnSua
@@ -95,6 +95,7 @@ namespace BTL_HSK
             this.btnSua.TabIndex = 2;
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = true;
+            this.btnSua.TextChanged += new System.EventHandler(this.txtMaHang_TextChanged);
             this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
             // btnXoa
@@ -105,13 +106,14 @@ namespace BTL_HSK
             this.btnXoa.TabIndex = 3;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.UseVisualStyleBackColor = true;
+            this.btnXoa.TextChanged += new System.EventHandler(this.txtMaHang_TextChanged);
             this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbNhomHang);
             this.groupBox1.Controls.Add(this.txtHSX);
             this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.txtMaNhomHang);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.txtGiaBan);
             this.groupBox1.Controls.Add(this.label6);
@@ -131,6 +133,14 @@ namespace BTL_HSK
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin hàng hóa";
             // 
+            // cbNhomHang
+            // 
+            this.cbNhomHang.FormattingEnabled = true;
+            this.cbNhomHang.Location = new System.Drawing.Point(363, 91);
+            this.cbNhomHang.Name = "cbNhomHang";
+            this.cbNhomHang.Size = new System.Drawing.Size(121, 21);
+            this.cbNhomHang.TabIndex = 14;
+            // 
             // txtHSX
             // 
             this.txtHSX.Location = new System.Drawing.Point(91, 126);
@@ -149,23 +159,15 @@ namespace BTL_HSK
             this.label8.TabIndex = 12;
             this.label8.Text = "Hãng sản xuất";
             // 
-            // txtMaNhomHang
-            // 
-            this.txtMaNhomHang.Location = new System.Drawing.Point(363, 91);
-            this.txtMaNhomHang.Name = "txtMaNhomHang";
-            this.txtMaNhomHang.Size = new System.Drawing.Size(159, 20);
-            this.txtMaNhomHang.TabIndex = 11;
-            this.txtMaNhomHang.TextChanged += new System.EventHandler(this.txtMaHang_TextChanged);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(279, 94);
+            this.label5.Location = new System.Drawing.Point(295, 94);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(78, 13);
+            this.label5.Size = new System.Drawing.Size(62, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Mã nhóm hàng";
+            this.label5.Text = "Nhóm hàng";
             // 
             // txtGiaBan
             // 
@@ -259,7 +261,7 @@ namespace BTL_HSK
             // 
             // btnTimKiem
             // 
-            this.btnTimKiem.Location = new System.Drawing.Point(472, 199);
+            this.btnTimKiem.Location = new System.Drawing.Point(608, 143);
             this.btnTimKiem.Name = "btnTimKiem";
             this.btnTimKiem.Size = new System.Drawing.Size(75, 23);
             this.btnTimKiem.TabIndex = 5;
@@ -269,7 +271,7 @@ namespace BTL_HSK
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(608, 145);
+            this.btnReset.Location = new System.Drawing.Point(608, 172);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(75, 23);
             this.btnReset.TabIndex = 6;
@@ -281,9 +283,9 @@ namespace BTL_HSK
             // 
             this.groupBox2.Controls.Add(this.dgvHangHoa);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(12, 226);
+            this.groupBox2.Location = new System.Drawing.Point(12, 201);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(710, 188);
+            this.groupBox2.Size = new System.Drawing.Size(710, 213);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Danh sách hàng hóa";
@@ -301,7 +303,7 @@ namespace BTL_HSK
             this.sMaNhomHang});
             this.dgvHangHoa.Location = new System.Drawing.Point(10, 19);
             this.dgvHangHoa.Name = "dgvHangHoa";
-            this.dgvHangHoa.Size = new System.Drawing.Size(694, 163);
+            this.dgvHangHoa.Size = new System.Drawing.Size(694, 188);
             this.dgvHangHoa.TabIndex = 0;
             this.dgvHangHoa.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHangHoa_CellContentClick);
             // 
@@ -347,35 +349,30 @@ namespace BTL_HSK
             // 
             // sMaNhomHang
             // 
-            this.sMaNhomHang.DataPropertyName = "sMaNhomHang";
-            this.sMaNhomHang.HeaderText = "Mã nhóm hàng";
+            this.sMaNhomHang.DataPropertyName = "sTenNhomHang";
+            this.sMaNhomHang.HeaderText = " Nhóm hàng";
             this.sMaNhomHang.Name = "sMaNhomHang";
             this.sMaNhomHang.Width = 120;
             // 
-            // label9
+            // btnBaoCao
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(69, 203);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(115, 13);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "Nhập tên hàng cần tìm";
-            // 
-            // txtSearchTenHH
-            // 
-            this.txtSearchTenHH.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearchTenHH.Location = new System.Drawing.Point(190, 200);
-            this.txtSearchTenHH.Name = "txtSearchTenHH";
-            this.txtSearchTenHH.Size = new System.Drawing.Size(244, 20);
-            this.txtSearchTenHH.TabIndex = 9;
+            this.btnBaoCao.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnBaoCao.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnBaoCao.Location = new System.Drawing.Point(608, 12);
+            this.btnBaoCao.Name = "btnBaoCao";
+            this.btnBaoCao.Size = new System.Drawing.Size(75, 38);
+            this.btnBaoCao.TabIndex = 8;
+            this.btnBaoCao.Text = "In báo cáo";
+            this.btnBaoCao.UseVisualStyleBackColor = false;
+            this.btnBaoCao.Click += new System.EventHandler(this.btnBaoCao_Click);
             // 
             // frmHangHoa
             // 
+            this.AccessibleRole = System.Windows.Forms.AccessibleRole.Sound;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(734, 421);
-            this.Controls.Add(this.txtSearchTenHH);
-            this.Controls.Add(this.label9);
+            this.Controls.Add(this.btnBaoCao);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnTimKiem);
@@ -410,7 +407,6 @@ namespace BTL_HSK
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtMaHang;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtMaNhomHang;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtGiaBan;
         private System.Windows.Forms.Label label6;
@@ -429,8 +425,8 @@ namespace BTL_HSK
         private System.Windows.Forms.DataGridViewTextBoxColumn fGiaBan;
         private System.Windows.Forms.DataGridViewTextBoxColumn sHangSX;
         private System.Windows.Forms.DataGridViewTextBoxColumn sMaNhomHang;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtSearchTenHH;
+        private System.Windows.Forms.ComboBox cbNhomHang;
+        private System.Windows.Forms.Button btnBaoCao;
     }
 }
 

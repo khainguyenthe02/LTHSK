@@ -138,7 +138,7 @@ namespace BTL_HSK
             // 
             // btnTimKiem
             // 
-            this.btnTimKiem.Location = new System.Drawing.Point(606, 129);
+            this.btnTimKiem.Location = new System.Drawing.Point(606, 159);
             this.btnTimKiem.Name = "btnTimKiem";
             this.btnTimKiem.Size = new System.Drawing.Size(75, 23);
             this.btnTimKiem.TabIndex = 13;
@@ -278,7 +278,7 @@ namespace BTL_HSK
             // 
             // btnXoa
             // 
-            this.btnXoa.Location = new System.Drawing.Point(606, 100);
+            this.btnXoa.Location = new System.Drawing.Point(606, 130);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(75, 23);
             this.btnXoa.TabIndex = 11;
@@ -288,7 +288,7 @@ namespace BTL_HSK
             // 
             // btnSua
             // 
-            this.btnSua.Location = new System.Drawing.Point(606, 71);
+            this.btnSua.Location = new System.Drawing.Point(606, 101);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(75, 23);
             this.btnSua.TabIndex = 10;
@@ -298,7 +298,7 @@ namespace BTL_HSK
             // 
             // btnThem
             // 
-            this.btnThem.Location = new System.Drawing.Point(606, 42);
+            this.btnThem.Location = new System.Drawing.Point(606, 72);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(75, 23);
             this.btnThem.TabIndex = 9;
@@ -319,12 +319,15 @@ namespace BTL_HSK
             // 
             // btnBaoCao
             // 
-            this.btnBaoCao.Location = new System.Drawing.Point(606, 158);
+            this.btnBaoCao.BackColor = System.Drawing.Color.OrangeRed;
+            this.btnBaoCao.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnBaoCao.Location = new System.Drawing.Point(606, 12);
             this.btnBaoCao.Name = "btnBaoCao";
-            this.btnBaoCao.Size = new System.Drawing.Size(75, 23);
-            this.btnBaoCao.TabIndex = 16;
+            this.btnBaoCao.Size = new System.Drawing.Size(75, 38);
+            this.btnBaoCao.TabIndex = 17;
             this.btnBaoCao.Text = "In báo cáo";
-            this.btnBaoCao.UseVisualStyleBackColor = true;
+            this.btnBaoCao.UseVisualStyleBackColor = false;
+            this.btnBaoCao.Click += new System.EventHandler(this.btnBaoCao_Click);
             // 
             // frmHangBan
             // 

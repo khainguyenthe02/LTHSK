@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTL_HSK.Reports;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CrystalDecisions.CrystalReports.Engine;
 
 namespace BTL_HSK
 {
@@ -22,9 +24,28 @@ namespace BTL_HSK
 
         private void frmTBCanBaoHanh_Load(object sender, EventArgs e)
         {
+            loadCBHangHoa();
             showDSBH();
         }
 
+        void loadCBHangHoa()
+        {
+            string con = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                var cmd = new SqlCommand("SELECT * FROM dbo.tblHangHoa", connection);
+                connection.Open();
+                var er = cmd.ExecuteReader();
+
+                var dt = new DataTable();
+                dt.Load(er);
+
+                cbThietBi.DisplayMember = "sTenHang";
+                cbThietBi.ValueMember = "PK_MaHang";
+                cbThietBi.DataSource = dt;
+                connection.Close();
+            }//con
+        }
         private DataTable getTBBH()
         {
             con.ConnectionString = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
@@ -63,7 +84,7 @@ namespace BTL_HSK
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@mabh", txtMaBH.Text);
-                cmd.Parameters.AddWithValue("@matb", txtMaTB.Text);
+                cmd.Parameters.AddWithValue("@tentb", cbThietBi.Text);
                 
                 cmd.Parameters.AddWithValue("@tinhtrang", txtTinhTrang.Text);
                 cmd.Parameters.AddWithValue("@nguyennhan", txtNguyenNhan.Text);
@@ -100,19 +121,21 @@ namespace BTL_HSK
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                 }
+                btnReset_Click(sender, e);
             }
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             txtMaBH.Text =
-            txtMaTB.Text =
+            cbThietBi.Text =
             
             txtTinhTrang.Text =
             txtNguyenNhan.Text =
             mtbTGNhanBH.Text =
             mtbTGHetHB.Text = string.Empty;
-            btnSua.Enabled = btnXoa.Enabled = false;
+            showDSBH();
+            
         }
 
         private void btnSua_Click(object sender, EventArgs e)
@@ -128,7 +151,7 @@ namespace BTL_HSK
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@mabh", drvTBBH["PK_MaBH"]);
-                cmd.Parameters.AddWithValue("@matb", drvTBBH["sMaThietBi"]);
+                cmd.Parameters.AddWithValue("@tentb", drvTBBH["sTenhang"]);
                 
                 cmd.Parameters.AddWithValue("@tinhtrang", txtTinhTrang.Text);
                 cmd.Parameters.AddWithValue("@nguyennhan", txtNguyenNhan.Text);
@@ -156,7 +179,7 @@ namespace BTL_HSK
             try
             {
                 txtMaBH.Text = dgvTBBH[0, e.RowIndex].Value.ToString();
-                txtMaTB.Text = dgvTBBH[1, e.RowIndex].Value.ToString();
+                cbThietBi.Text = dgvTBBH[1, e.RowIndex].Value.ToString();
                 
                 txtTinhTrang.Text = dgvTBBH[2, e.RowIndex].Value.ToString();
                 txtNguyenNhan.Text = dgvTBBH[3, e.RowIndex].Value.ToString();
@@ -185,7 +208,7 @@ namespace BTL_HSK
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@mabh", drvTBBH["PK_MaBH"]);
-                        cmd.Parameters.AddWithValue("@matb", drvTBBH["sMaThietBi"]);
+                        cmd.Parameters.AddWithValue("@tentb", drvTBBH["sTenhang"]);
                         cnn.Open();
                         cmd.ExecuteNonQuery();
                         cnn.Close();
@@ -205,21 +228,69 @@ namespace BTL_HSK
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
             con.ConnectionString = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
-            SqlCommand cmd = new SqlCommand("searchTBBH", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@mabh", txtMaBH.Text);
-            cmd.Parameters.AddWithValue("@matb", txtMaTB.Text);
+            string timkiem = "select * from tblThietBiCanBaoHanh where PK_MaBH is not null ";
+            if (!string.IsNullOrEmpty(txtMaBH.Text.Trim()))
+                timkiem += string.Format(" AND PK_MaBH like '%{0}%'", txtMaBH.Text);
+            if (!string.IsNullOrEmpty(cbThietBi.Text.Trim()))
+                timkiem += string.Format(" AND sTenhang like N'%{0}%'", cbThietBi.Text);
+            if (!string.IsNullOrEmpty(mtbTGNhanBH.Text.Trim()))
+                timkiem += string.Format(" AND dTGNhanBH > '{0}'", mtbTGNhanBH.Text);
+            if (!string.IsNullOrEmpty(mtbTGHetHB.Text.Trim()))
+                timkiem += string.Format(" AND dTGNhanBH < '{0}'", mtbTGHetHB.Text);
             con.Open();
-            cmd.ExecuteNonQuery();
-            
-
-            //Load dữ liệu
-            SqlDataReader sdr = cmd.ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Load(sdr);
-            dgvTBBH.DataSource = dt;
+            using (SqlCommand cmd = new SqlCommand(timkiem, con))
+            {
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    dgvTBBH.DataSource = dt;
+                }
+            }
             con.Close();
+        }
+
+        private void btnBaoCao_Click(object sender, EventArgs e)
+        {
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+            SqlCommand cmd = new SqlCommand("TBBHTheoTen", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ma", cbThietBi.SelectedValue);
+            con.Open();
+            
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    rptTBBH rpt = new rptTBBH();
+                    
+                    rpt.SetDataSource(dt);
+                    rpt.SetParameterValue("name", cbThietBi.SelectedValue.ToString());
+                
+
+
+                    frmRPTBBH f = new frmRPTBBH();
+                    f.crvTBBH.ReportSource = rpt;
+                    
+                    f.Show();
+
+                }
+            
+            con.Close();
+
+        }
+
+        private void mtbTGNhanBH_TextChanged(object sender, EventArgs e)
+        {
+            DateTime d;
+            DateTime.TryParse(mtbTGNhanBH.Text.Trim(),out d);
+
+        }
+
+        private void mtbTGHetHB_TextChanged(object sender, EventArgs e)
+        {
+            DateTime d;
+            DateTime.TryParse(mtbTGHetHB.Text.Trim(), out d);
         }
     }
 }

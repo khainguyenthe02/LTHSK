@@ -16,7 +16,16 @@ namespace BTL_HSK
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmTBCanBaoHanh());
+            Application.Run(new frmDangNhap());
+        }
+        internal static Form FindOpenedForm(string name)
+        {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase))
+                    return f;
+            }
+            return null;
         }
     }
 }
